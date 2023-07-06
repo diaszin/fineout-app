@@ -1,3 +1,4 @@
+import 'package:fineout_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:fineout_app/components/validacaoLogin.dart';
 
@@ -66,6 +67,8 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             // Lógica para cadastrar o usuário
+                            Navigator.of(context)
+                                .pushNamed(RoutesGenerator.homePage);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -82,6 +85,16 @@ class LoginPage extends StatelessWidget {
                         child: Text('Avançar'),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: TextButton(
+                        child: const Text("Quero me cadastrar"),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(RoutesGenerator.signupPage);
+                        },
+                      ),
+                    )
                   ],
                 ),
               ],

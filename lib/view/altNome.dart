@@ -7,17 +7,13 @@ class MudaNome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
       body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Image.asset(
-              'assets/back.png',
-              width: 50.0,
-              height: 50.0,
-            ),
-          ),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(

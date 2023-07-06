@@ -1,3 +1,5 @@
+import 'package:fineout_app/controller/UserController.dart';
+import 'package:fineout_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:fineout_app/components/validacaoLogin.dart';
 
@@ -9,7 +11,8 @@ class TelaCadastro extends StatefulWidget {
 class _TelaCadastroState extends State<TelaCadastro> {
   final _formKey = GlobalKey<FormState>();
   String? _password;
-
+  String? _email;
+  String? _nomeCompleto;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +38,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       decoration: InputDecoration(
                         hintText: 'Nome completo',
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nomeCompleto = value;
+                        });
+                      },
                     ),
                     SizedBox(height: 25.0),
                     TextFormField(
@@ -42,6 +50,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         hintText: 'Email',
                       ),
                       validator: Validator.validateEmail,
+                      onChanged: (value) {
+                        setState(() {
+                          _email = value;
+                        });
+                      },
                     ),
                     SizedBox(height: 25.0),
                     TextFormField(
@@ -66,6 +79,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       validator: (value) {
                         if (value != _password) {
                           return 'As senhas não coincidem';
+                        } else if (value == null || value.isEmpty) {
+                          return "Campo vazio";
                         }
                         return null;
                       },
@@ -76,9 +91,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
                       width: 200.0,
                       height: 50.0,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             // Lógica para cadastrar o usuário
+                            await UserController().criarUsuario(
+                                _nomeCompleto!, _email!, _password!);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -101,6 +118,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                 TextButton(
                   onPressed: () {
                     // Lógica para criar uma nova conta
+                    Navigator.of(context).pushNamed(RoutesGenerator.loginPage);
                   },
                   child: Container(
                     padding:

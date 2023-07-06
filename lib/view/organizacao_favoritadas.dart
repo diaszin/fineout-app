@@ -9,6 +9,7 @@ class TelaOrganizacaoFavoritadas extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: ListView.builder(
         itemCount: 10,

@@ -1,5 +1,7 @@
-import 'package:fineout_app/components/butttom_favorite.dart';
+import 'package:fineout_app/model/User.dart';
+import 'package:fineout_app/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
 
 class TelaDoador extends StatefulWidget {
   @override
@@ -7,29 +9,6 @@ class TelaDoador extends StatefulWidget {
 }
 
 class _TelaDoadorState extends State<TelaDoador> {
-  List<Item> items = [
-    Item(
-      name: 'Cleber',
-      descricao: 'Descrição do Item 1',
-      isFavorite: false,
-    ),
-    Item(
-      name: 'Bruno',
-      descricao: 'Descrição do Item 2',
-      isFavorite: false,
-    ),
-    Item(
-      name: 'Davi',
-      descricao: 'Descrição do Item 3',
-      isFavorite: false,
-    ),
-    Item(
-      name: 'Kaique',
-      descricao: 'Descrição do Item 4',
-      isFavorite: false,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,61 +38,75 @@ class _TelaDoadorState extends State<TelaDoador> {
               title: Text('Ver perfil'),
               onTap: () {
                 // Ação ao selecionar a opção 1
+                Navigator.of(context).pushNamed(RoutesGenerator.telaPerfil);
               },
             ),
             ListTile(
-               leading: Icon(Icons.logout),
+              leading: Icon(Icons.logout),
               title: Text('Sair'),
               onTap: () {
                 // Ação ao selecionar a opção 2
+                Navigator.of(context).pushNamed(RoutesGenerator.loginPage);
               },
             ),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 25),
-          Expanded(
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) => Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
-                child: Container(
-                  padding: EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
-                  ),
-                  child: ListTile(
-                    title: Text(items[index].name),
-                    subtitle: Text(items[index].descricao),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.monetization_on_outlined),
-                          onPressed: () {
-                            // Ação ao clicar no primeiro ícone (editar)
-                          },
+      body: FutureBuilder(
+          future: User().consultarOrganizacoes(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            final organizacoesList = snapshot.data as List<dynamic>;
+
+            return Column(
+              children: [
+                SizedBox(height: 25),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: organizacoesList.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+                      child: Container(
+                        padding: EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue),
                         ),
-                        FavoriteIconButton(
-                          isFavorite: items[index].isFavorite,
-                          onPressed: () {
-                            setState(() {
-                              items[index].isFavorite =
-                                  !items[index].isFavorite;
-                            });
-                          },
+                        child: ListTile(
+                          title: Text(organizacoesList[index][1]),
+                          subtitle: Text(organizacoesList[index][2]),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.monetization_on_outlined),
+                                onPressed: () {
+                                  // Ação ao clicar no primeiro ícone (editar)
+                                },
+                              ),
+                              // FavoriteIconButton(
+                              //   isFavorite: items[index].isFavorite,
+                              //   onPressed: () {
+                              //     setState(() {
+                              //       items[index].isFavorite =
+                              //           !items[index].isFavorite;
+                              //     });
+                              //   },
+                              // ),
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        ],
-      ),
+              ],
+            );
+          }),
     );
   }
 }
