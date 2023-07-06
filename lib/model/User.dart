@@ -3,10 +3,15 @@ import 'package:mysql1/mysql1.dart';
 
 class User {
   Future<void> criarUsuario(String nome, String email, String senha) async {
-    final connection = await createConnection();
+    late final MySqlConnection connection;
+    connection = await createConnection();
     final values = [nome, email, senha];
-    await connection.query(
-        "INSERT INTO usuario(nome, email, senha) VALUES (?,?,?)", values);
+    try {
+      await connection.query(
+          "INSERT INTO usuario(nome, email, senha) VALUES (?,?,?)", values);
+    } catch (e) {
+      rethrow;
+    }
     await connection.close();
     print("Cadastrou com sucesso");
   }
@@ -88,9 +93,12 @@ class User {
   }
 
   Future<Results> consultarOrganizacoes() async {
+    final listaOrganizacoes;
+
     final connection = await createConnection();
     final result = await connection.query("SELECT * FROM organizacoes");
-
     return result;
   }
 }
+
+void main(List<String> args) {}

@@ -60,7 +60,7 @@ class _TelaDoadorState extends State<TelaDoador> {
                 child: CircularProgressIndicator(),
               );
             }
-            final organizacoesList = snapshot.data as List<dynamic>;
+            final organizacoesList = snapshot.data as List<Results>;
 
             return Column(
               children: [
@@ -77,7 +77,7 @@ class _TelaDoadorState extends State<TelaDoador> {
                           border: Border.all(color: Colors.blue),
                         ),
                         child: ListTile(
-                          title: Text(organizacoesList[index][1]),
+                          title: Text(organizacoesList),
                           subtitle: Text(organizacoesList[index][2]),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,

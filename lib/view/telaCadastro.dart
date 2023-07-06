@@ -94,8 +94,24 @@ class _TelaCadastroState extends State<TelaCadastro> {
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             // Lógica para cadastrar o usuário
-                            await UserController().criarUsuario(
-                                _nomeCompleto!, _email!, _password!);
+                            try {
+                              await UserController().criarUsuario(
+                                _nomeCompleto!,
+                                _email!,
+                                _password!,
+                              );
+                            } catch (e) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text("Mensagem de Erro"),
+                                      content: Center(
+                                        child: Text(e.toString())
+                                      )
+                                    );
+                                  });
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
