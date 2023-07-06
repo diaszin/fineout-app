@@ -10,7 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   sqlite3: 
-  path: 
+  path:
+  mysql1: 
 
 dev_dependencies:
   flutter_test:
