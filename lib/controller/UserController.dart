@@ -16,6 +16,14 @@ class UserController {
     }
     return listaOrganizacoes;
   }
+  Future<List> consultarOrganizacao(int id) async {
+    final List listaOrganizacoes = [];
+    final resultadoBanco = await User().consultarOrganizacao(id);
+    for (var row in resultadoBanco) {
+      listaOrganizacoes.add({"id": row[0], "nome": row[1], "email": row[2]});
+    }
+    return listaOrganizacoes;
+  }
 
   Future<bool> autenticarUsuario(String email, String senha) async {
     final emailTratado = email.toLowerCase();

@@ -4,6 +4,7 @@ import 'package:fineout_app/view/doacaoPage.dart';
 import 'package:fineout_app/view/organizacao_favoritadas.dart';
 import 'package:fineout_app/view/telaCadastro.dart';
 import 'package:fineout_app/view/telaDoador.dart';
+import 'package:fineout_app/view/telaSobre.dart';
 import 'package:fineout_app/view/tela_login.dart';
 import 'package:fineout_app/view/telaPerfil.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,8 @@ class RoutesGenerator {
         return _goPage(TelaDoador());
       case doar:
         return _goPage(Doacao());
+      case aboutOrgPage:
+        return _goPage(SobreNos());
       default:
         return _goPage(LoginPage());
     }

@@ -96,7 +96,18 @@ class User {
     final listaOrganizacoes;
 
     final connection = await createConnection();
-    final result = await connection.query("SELECT * FROM organizacoes");
+    final result =
+        await connection.query("SELECT id, nome, email FROM organizacoes");
+    return result;
+  }
+
+  Future<Results> consultarOrganizacao(int id) async {
+    final listaOrganizacoes;
+
+    final connection = await createConnection();
+    final values = [id];
+    final result = await connection.query(
+        "SELECT nome, email, descricao FROM organizacoes WHERE id=? LIMIT 1", values);
     return result;
   }
 }
