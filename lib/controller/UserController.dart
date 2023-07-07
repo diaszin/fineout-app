@@ -16,9 +16,10 @@ class UserController {
     }
     return listaOrganizacoes;
   }
-}
 
-void main(List<String> args) async {
-  final resultado = await UserController().consultarOrganizacoes();
-  print(resultado);
+  Future<bool> autenticarUsuario(String email, String senha) async {
+    final emailTratado = email.toLowerCase();
+    final senhaTratado = senha.toLowerCase();
+    return User().autenticarUsuario(emailTratado, senhaTratado);
+  }
 }

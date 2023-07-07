@@ -1,5 +1,6 @@
 import 'package:fineout_app/view/altEmail.dart';
 import 'package:fineout_app/view/altNome.dart';
+import 'package:fineout_app/view/doacaoPage.dart';
 import 'package:fineout_app/view/organizacao_favoritadas.dart';
 import 'package:fineout_app/view/telaCadastro.dart';
 import 'package:fineout_app/view/telaDoador.dart';
@@ -17,6 +18,7 @@ class RoutesGenerator {
   static const alterarEmail = '/alterarEmail';
   static const visualizarDoacao = '/visualizarDoacao';
   static const telaPerfil = "/telaPerfil";
+  static const doar = "/doar";
 
   RoutesGenerator._();
 
@@ -36,6 +38,8 @@ class RoutesGenerator {
         return _goPage(TelaPerfil());
       case homePage:
         return _goPage(TelaDoador());
+      case doar:
+        return _goPage(Doacao());
       default:
         return _goPage(LoginPage());
     }
