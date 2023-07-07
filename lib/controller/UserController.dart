@@ -17,8 +17,3 @@ class UserController {
     return listaOrganizacoes;
   }
 }
-
-void main(List<String> args) async {
-  final resultado = await UserController().consultarOrganizacoes();
-  print(resultado);
-}
