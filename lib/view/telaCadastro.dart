@@ -89,7 +89,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                     SizedBox(height: 20.0),
                     Container(
                       width: 200.0,
-                      height: 50.0,
+                      height: 58.0,
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
@@ -105,11 +105,9 @@ class _TelaCadastroState extends State<TelaCadastro> {
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: const Text("Mensagem de Erro"),
-                                      content: Center(
-                                        child: Text(e.toString())
-                                      )
-                                    );
+                                        title: const Text("Mensagem de Erro"),
+                                        content:
+                                            Center(child: Text(e.toString())));
                                   });
                             }
                           }
@@ -137,6 +135,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
                     Navigator.of(context).pushNamed(RoutesGenerator.loginPage);
                   },
                   child: Container(
+                    width: 1200,
                     padding:
                         EdgeInsets.symmetric(vertical: 20.0, horizontal: 150),
                     color: Colors.transparent,

@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20.0),
                     Container(
                       width: 200.0,
-                      height: 50.0,
+                      height: 70.0,
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
