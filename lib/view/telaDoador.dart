@@ -3,6 +3,8 @@ import 'package:fineout_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
+import '../controller/UserController.dart';
+
 class TelaDoador extends StatefulWidget {
   @override
   _TelaDoadorState createState() => _TelaDoadorState();
@@ -53,14 +55,14 @@ class _TelaDoadorState extends State<TelaDoador> {
         ),
       ),
       body: FutureBuilder(
-          future: User().consultarOrganizacoes(),
+          future: UserController().consultarOrganizacoes(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
-            final organizacoesList = snapshot.data as List<Results>;
+            final organizacoesList = snapshot.data as List;
 
             return Column(
               children: [
@@ -77,13 +79,13 @@ class _TelaDoadorState extends State<TelaDoador> {
                           border: Border.all(color: Colors.blue),
                         ),
                         child: ListTile(
-                          title: Text(organizacoesList),
-                          subtitle: Text(organizacoesList[index][2]),
+                          title: Text(organizacoesList[index]["nome"]),
+                          subtitle: Text(organizacoesList[index]["email"]),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.monetization_on_outlined),
+                                icon: const Icon(Icons.monetization_on_outlined, color: Colors.black,),
                                 onPressed: () {
                                   // Ação ao clicar no primeiro ícone (editar)
                                 },
@@ -109,16 +111,4 @@ class _TelaDoadorState extends State<TelaDoador> {
           }),
     );
   }
-}
-
-class Item {
-  final String name;
-  final String descricao;
-  bool isFavorite;
-
-  Item({
-    required this.name,
-    required this.descricao,
-    required this.isFavorite,
-  });
 }

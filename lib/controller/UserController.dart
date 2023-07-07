@@ -16,4 +16,10 @@ class UserController {
     }
     return listaOrganizacoes;
   }
+
+  Future<bool> autenticarUsuario(String email, String senha) async {
+    final emailTratado = email.toLowerCase();
+    final senhaTratado = senha.toLowerCase();
+    return User().autenticarUsuario(emailTratado, senhaTratado);
+  }
 }

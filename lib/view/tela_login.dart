@@ -1,9 +1,17 @@
+import 'package:fineout_app/controller/UserController.dart';
 import 'package:fineout_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:fineout_app/components/validacaoLogin.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  String? _email;
+  String? _senha;
 
   String? _validateEmail(String? email) {
     return Validator.validateEmail(email);
@@ -47,6 +55,11 @@ class LoginPage extends StatelessWidget {
                             hintText: 'Email',
                           ),
                           validator: _validateEmail,
+                          onChanged: (value) {
+                            setState(() {
+                              _email = value;
+                            });
+                          },
                         ),
                         SizedBox(height: 10.0),
                         TextFormField(
@@ -56,6 +69,11 @@ class LoginPage extends StatelessWidget {
                             hintText: 'Senha',
                           ),
                           validator: _validatePassword,
+                          onChanged: (value) {
+                            setState(() {
+                              _senha = value;
+                            });
+                          },
                         ),
                       ],
                     ),
@@ -64,11 +82,24 @@ class LoginPage extends StatelessWidget {
                       width: 200.0,
                       height: 50.0,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            // Lógica para cadastrar o usuário
-                            Navigator.of(context)
-                                .pushNamed(RoutesGenerator.homePage);
+                            // Lógica para autenticar e ir
+                            final foiAutenticado = await UserController()
+                                .autenticarUsuario(_email!, _senha!);
+                            if (foiAutenticado) {
+                              Navigator.of(context)
+                                  .pushNamed(RoutesGenerator.homePage);
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Mensagem !"),
+                                      content: Text("Usuário inválido !"),
+                                    );
+                                  });
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
